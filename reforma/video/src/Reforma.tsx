@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, Img, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 
-export const CENA = 180;
+export const CENA = 240;
 export const CENAS = [
   {foto: '1-galinheiro.jpg', titulo: 'Galinheiro', itens: ['Faxina pesada e pintura lavável', 'Bebedouros nipple e comedouros tubulares', 'Piso com caimento para ralo', 'Abate em sala separada']},
   {foto: '2-lateral.jpg', titulo: 'Espaço lateral', itens: ['Descarte da sucata', 'Forro de PVC a 3 m com LED', 'Estantes de aço e ovos organizados', 'Botijões em gaiola externa']},
@@ -13,18 +13,22 @@ const TEAL = '#0E6B64', YOLK = '#E1A117', INK = '#1B2624';
 const Cena: React.FC<{c: typeof CENAS[number]; n: number}> = ({c, n}) => {
   const f = useCurrentFrame(); const {fps} = useVideoConfig();
   const zoom = interpolate(f, [0, CENA], [1.05, 1.15]);
-  const painel = spring({frame: f - 45, fps, config: {damping: 200}});
+  const wipe = interpolate(f, [55, 95], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+  const painel = spring({frame: f - 140, fps, config: {damping: 200}});
   return (
     <AbsoluteFill style={{backgroundColor: INK, fontFamily: 'sans-serif'}}>
-      <Img src={staticFile(c.foto)} style={{width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${zoom})`, filter: `brightness(${1 - painel * 0.35})`}} />
+      <Img src={staticFile(c.foto)} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${zoom})`}} />
+      <Img src={staticFile(c.foto.replace('.jpg', '-depois.jpg'))} style={{position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${zoom})`,
+        clipPath: `inset(0 ${(1 - wipe) * 100}% 0 0)`, filter: `brightness(${1 - painel * 0.3})`}} />
+      {wipe > 0 && wipe < 1 ? <div style={{position: 'absolute', top: 0, bottom: 0, left: `${wipe * 100}%`, width: 8, background: YOLK}} /> : null}
       <div style={{position: 'absolute', top: 50, left: 50, background: INK, color: 'white', padding: '14px 26px', borderRadius: 10, fontSize: 40, fontWeight: 800}}>
-        <span style={{color: YOLK}}>Foto {n} · </span>{c.titulo}
+        <span style={{color: YOLK}}>{c.titulo} · </span>{wipe < 0.5 ? 'Antes' : 'Depois'}
       </div>
       <div style={{position: 'absolute', left: 50, right: 50, bottom: 60, background: 'white', borderRadius: 18, padding: '34px 40px',
         transform: `translateY(${(1 - painel) * 500}px)`, display: 'flex', flexDirection: 'column', gap: 18}}>
         <div style={{color: TEAL, fontSize: 30, fontWeight: 800, letterSpacing: 2}}>O QUE MUDA</div>
         {c.itens.map((t, i) => {
-          const o = interpolate(f, [60 + i * 12, 75 + i * 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
+          const o = interpolate(f, [150 + i * 12, 165 + i * 12], [0, 1], {extrapolateLeft: 'clamp', extrapolateRight: 'clamp'});
           return <div key={t} style={{opacity: o, fontSize: 40, color: INK, display: 'flex', gap: 18, alignItems: 'center'}}>
             <span style={{width: 18, height: 18, borderRadius: 9, background: YOLK, flexShrink: 0}} />{t}</div>;
         })}

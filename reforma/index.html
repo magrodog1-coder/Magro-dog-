@@ -39,12 +39,16 @@ header p{color:var(--muted);font-size:1.1rem}
 
 section.room{display:flex;flex-direction:column;gap:24px;border-top:2px solid var(--ink);padding-top:22px}
 .room-head{display:flex;flex-direction:column;gap:6px}
-.grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:start}
-@media (max-width:720px){.grid{grid-template-columns:minmax(0,1fr)}}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:start}
+.pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.lbl{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px;margin-right:8px}
+.lbl.antes{background:var(--line);color:var(--ink)}
+.lbl.depois{background:var(--teal-soft);color:var(--teal)}
+@media (max-width:520px){.pair{gap:8px}}
 figure{margin:0;display:flex;flex-direction:column;gap:6px}
 figure img{width:100%;border-radius:8px;display:block;aspect-ratio:3/4;object-fit:cover}
 figcaption{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
-.cols{display:flex;flex-direction:column;gap:20px;min-width:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:28px;min-width:0}
 .block{display:flex;flex-direction:column;gap:8px}
 .block h3{display:flex;align-items:center;gap:8px}
 .tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px}
@@ -88,6 +92,7 @@ svg .glass{stroke:var(--teal);stroke-width:4}
   <span class="eyebrow">Aviário da Praça · plano de reforma</span>
   <h1>Do galinheiro ao caixa: o que mudar em cada espaço</h1>
   <p>Análise das 4 fotos, com o que eu vi em cada uma, o que sugiro fazer e um desenho de como pode ficar. As medidas dos desenhos são aproximadas, estimadas pelas fotos.</p>
+  <p>As imagens de <b>depois</b> foram geradas por IA a partir das fotos reais. Servem para mostrar a ideia ao sócio e ao pedreiro, não como projeto exato.</p>
 </header>
 
 <section style="display:flex;flex-direction:column;gap:14px">
@@ -103,8 +108,11 @@ svg .glass{stroke:var(--teal);stroke-width:4}
 <!-- FOTO 1 -->
 <section class="room">
   <div class="room-head"><span class="eyebrow">Foto 1</span><h2>Galinheiro</h2></div>
-  <div class="grid">
-    <figure><img src="fotos/1-galinheiro.jpg" alt="Galinheiro atual: frangos sobre serragem, teias de aranha no teto, ventilador sujo e caixas espalhadas"><figcaption>Como está hoje</figcaption></figure>
+  <div class="pair">
+      <figure><img src="fotos/1-galinheiro.jpg" alt="Galinheiro atual: frangos sobre serragem, teias de aranha no teto, ventilador sujo e caixas espalhadas"><figcaption><span class="lbl antes">Antes</span>Como está hoje</figcaption></figure>
+      <figure><img src="fotos/1-galinheiro-depois.jpg" alt="Ilustração de como galinheiro pode ficar depois da reforma"><figcaption><span class="lbl depois">Depois</span>Ilustração gerada por IA</figcaption></figure>
+    </div>
+    <div class="grid">
     <div class="cols">
       <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
         <ul class="now-list">
@@ -180,8 +188,11 @@ svg .glass{stroke:var(--teal);stroke-width:4}
 <!-- FOTO 2 -->
 <section class="room">
   <div class="room-head"><span class="eyebrow">Foto 2</span><h2>Espaço ao lado da loja</h2></div>
-  <div class="grid">
-    <figure><img src="fotos/2-lateral.jpg" alt="Corredor lateral com caixas verdes, mesa inox coberta de papelão, botijões de gás, galões de água e engradados"><figcaption>Como está hoje</figcaption></figure>
+  <div class="pair">
+      <figure><img src="fotos/2-lateral.jpg" alt="Corredor lateral com caixas verdes, mesa inox coberta de papelão, botijões de gás, galões de água e engradados"><figcaption><span class="lbl antes">Antes</span>Como está hoje</figcaption></figure>
+      <figure><img src="fotos/2-lateral-depois.jpg" alt="Ilustração de como espaço lateral pode ficar depois da reforma"><figcaption><span class="lbl depois">Depois</span>Ilustração gerada por IA</figcaption></figure>
+    </div>
+    <div class="grid">
     <div class="cols">
       <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
         <ul class="now-list">
@@ -209,8 +220,11 @@ svg .glass{stroke:var(--teal);stroke-width:4}
 <!-- FOTO 3 -->
 <section class="room">
   <div class="room-head"><span class="eyebrow">Foto 3</span><h2>Local de corte</h2></div>
-  <div class="grid">
-    <figure><img src="fotos/3-corte.jpg" alt="Parede azulejada com aberturas; atrás, funcionária cortando frango em bancada de azulejo; na frente, mesa com toalha e mesa improvisada sobre galões"><figcaption>Como está hoje</figcaption></figure>
+  <div class="pair">
+      <figure><img src="fotos/3-corte.jpg" alt="Parede azulejada com aberturas; atrás, funcionária cortando frango em bancada de azulejo; na frente, mesa com toalha e mesa improvisada sobre galões"><figcaption><span class="lbl antes">Antes</span>Como está hoje</figcaption></figure>
+      <figure><img src="fotos/3-corte-depois.jpg" alt="Ilustração de como área de corte pode ficar depois da reforma"><figcaption><span class="lbl depois">Depois</span>Ilustração gerada por IA</figcaption></figure>
+    </div>
+    <div class="grid">
     <div class="cols">
       <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
         <ul class="now-list">
@@ -231,13 +245,17 @@ svg .glass{stroke:var(--teal);stroke-width:4}
       </div>
     </div>
   </div>
+  <p class="tip"><b>Na imagem do depois:</b> a IA deixou a área de corte aberta atrás do balcão. Na obra, mantenha uma divisória com vidro ou a parede com a janela de passagem: a vigilância costuma exigir essa separação entre corte e atendimento.</p>
 </section>
 
 <!-- FOTO 4 -->
 <section class="room">
   <div class="room-head"><span class="eyebrow">Foto 4</span><h2>Loja principal</h2></div>
-  <div class="grid">
-    <figure><img src="fotos/4-loja.jpg" alt="Fachada da loja Aviário da Praça com balcões refrigerados na frente, freezer de sorvete, prateleiras e um cano escorando a viga da entrada"><figcaption>Como está hoje</figcaption></figure>
+  <div class="pair">
+      <figure><img src="fotos/4-loja.jpg" alt="Fachada da loja Aviário da Praça com balcões refrigerados na frente, freezer de sorvete, prateleiras e um cano escorando a viga da entrada"><figcaption><span class="lbl antes">Antes</span>Como está hoje</figcaption></figure>
+      <figure><img src="fotos/4-loja-depois.jpg" alt="Ilustração de como loja pode ficar depois da reforma"><figcaption><span class="lbl depois">Depois</span>Ilustração gerada por IA</figcaption></figure>
+    </div>
+    <div class="grid">
     <div class="cols">
       <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
         <ul class="now-list">
@@ -325,6 +343,7 @@ svg .glass{stroke:var(--teal);stroke-width:4}
     </div>
     <p class="note">Linha tracejada amarela: o caminho do cliente. Ele entra, passa pelo corredor 1, compra no balcão do fundo, volta pelo corredor 3 e paga no caixa.</p>
   </div>
+  <p class="tip"><b>Na imagem da loja:</b> o cano do meio da entrada sumiu. Na obra, ele só sai depois que o engenheiro reforçar ou trocar a viga.</p>
   <p class="tip"><b>Sobre "tirar a parede do meio":</b> no desenho mantive a parede azulejada da sala de corte, porque ela é a barreira sanitária que a vigilância exige. O que sai são os balcões da frente e as prateleiras de trás. Se a parede que você quer tirar é outra, me diga qual que eu ajusto a planta.</p>
 </section>
 
