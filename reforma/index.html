@@ -1,0 +1,353 @@
+<title>Reforma Aviário da Praça</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: coluna única de leitura; cada ambiente = foto atual ao lado do diagnóstico, depois a proposta e o desenho */
+:root{
+  --bg:#F3F6F5; --surface:#FFFFFF; --ink:#1B2624; --muted:#56635F; --line:#D5DEDB;
+  --teal:#0E6B64; --teal-soft:#DCEEEB; --yolk:#E1A117; --yolk-soft:#FBF0D3; --alert:#B0402C; --alert-soft:#F8E3DE;
+  --plan-floor:#FFFFFF; --plan-wall:#1B2624; --plan-fill:#E9EFED;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Source Sans 3",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121A19; --surface:#1A2422; --ink:#E6EEEC; --muted:#9AAAA6; --line:#2E3C39;
+  --teal:#5CC2B8; --teal-soft:#1D3633; --yolk:#F0B940; --yolk-soft:#3A3018; --alert:#EE8A75; --alert-soft:#3B221D;
+  --plan-floor:#1A2422; --plan-wall:#E6EEEC; --plan-fill:#24312F; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121A19; --surface:#1A2422; --ink:#E6EEEC; --muted:#9AAAA6; --line:#2E3C39;
+  --teal:#5CC2B8; --teal-soft:#1D3633; --yolk:#F0B940; --yolk-soft:#3A3018; --alert:#EE8A75; --alert-soft:#3B221D;
+  --plan-floor:#1A2422; --plan-wall:#E6EEEC; --plan-fill:#24312F; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55}
+.wrap{max-width:980px;margin:0 auto;padding-block:40px 80px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.1}
+h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0;max-width:65ch}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--teal)}
+header{display:flex;flex-direction:column;gap:14px}
+header p{color:var(--muted);font-size:1.1rem}
+
+.alerts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.alert{background:var(--alert-soft);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:4px}
+.alert b{color:var(--alert);font-size:.95rem}
+.alert span{font-size:.95rem}
+
+section.room{display:flex;flex-direction:column;gap:24px;border-top:2px solid var(--ink);padding-top:22px}
+.room-head{display:flex;flex-direction:column;gap:6px}
+.grid{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:720px){.grid{grid-template-columns:minmax(0,1fr)}}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figure img{width:100%;border-radius:8px;display:block;aspect-ratio:3/4;object-fit:cover}
+figcaption{font-family:var(--f-mono);font-size:.75rem;color:var(--muted)}
+.cols{display:flex;flex-direction:column;gap:20px;min-width:0}
+.block{display:flex;flex-direction:column;gap:8px}
+.block h3{display:flex;align-items:center;gap:8px}
+.tag{font-family:var(--f-mono);font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:99px}
+.tag.now{background:var(--line);color:var(--ink)}
+.tag.do{background:var(--teal-soft);color:var(--teal)}
+ul{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:6px}
+li{max-width:65ch}
+li::marker{color:var(--teal)}
+.now-list li::marker{color:var(--muted)}
+.plan{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.plan-scroll{overflow-x:auto}
+.plan svg{display:block;width:100%;max-width:640px;height:auto;margin:0 auto;min-width:320px}
+.plan .note{font-size:.9rem;color:var(--muted)}
+.tip{background:var(--yolk-soft);border-radius:10px;padding:12px 16px;font-size:.95rem;max-width:none}
+.tip b{color:var(--ink)}
+
+ol.steps{margin:0;padding-left:1.4em;display:flex;flex-direction:column;gap:10px}
+ol.steps li::marker{font-family:var(--f-mono);color:var(--teal);font-weight:500}
+.ask{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px}
+
+svg text{font-family:var(--f-body);fill:var(--ink)}
+svg .sm{font-size:10px}
+svg .xs{font-size:8.5px;fill:var(--muted)}
+svg .mono{font-family:var(--f-mono);font-size:9px;fill:var(--muted)}
+svg .wall{fill:none;stroke:var(--plan-wall);stroke-width:4}
+svg .thin{fill:none;stroke:var(--plan-wall);stroke-width:1.5}
+svg .floor{fill:var(--plan-floor)}
+svg .zone{fill:var(--plan-fill)}
+svg .teal{fill:var(--teal-soft);stroke:var(--teal);stroke-width:1.5}
+svg .yolk{fill:var(--yolk-soft);stroke:var(--yolk);stroke-width:1.5}
+svg .red{fill:var(--alert-soft);stroke:var(--alert);stroke-width:1.5}
+svg .pipe{fill:none;stroke:var(--teal);stroke-width:2.5;stroke-dasharray:5 3}
+svg .flow{fill:none;stroke:var(--yolk);stroke-width:2;stroke-dasharray:3 4}
+svg .arrowhead{fill:var(--yolk)}
+svg .glass{stroke:var(--teal);stroke-width:4}
+</style>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">Aviário da Praça · plano de reforma</span>
+  <h1>Do galinheiro ao caixa: o que mudar em cada espaço</h1>
+  <p>Análise das 4 fotos, com o que eu vi em cada uma, o que sugiro fazer e um desenho de como pode ficar. As medidas dos desenhos são aproximadas, estimadas pelas fotos.</p>
+</header>
+
+<section style="display:flex;flex-direction:column;gap:14px">
+  <h2>Antes de tudo: 4 pontos de segurança</h2>
+  <div class="alerts">
+    <div class="alert"><b>Viga da fachada escorada</b><span>Na foto 4, a viga de ferro da entrada está enferrujada e apoiada num cano no meio da porta. Isso parece escora provisória. Chame um engenheiro antes de mexer em qualquer parede.</span></div>
+    <div class="alert"><b>Botijões de gás no depósito</b><span>Os botijões da foto 2 estão num corredor fechado, junto de papelão. O certo é uma gaiola de grade, ventilada, do lado de fora.</span></div>
+    <div class="alert"><b>Depenadeira junto das aves vivas</b><span>Na foto 1, o equipamento de abate está no mesmo ambiente do galinheiro. Abate e alojamento precisam ficar separados.</span></div>
+    <div class="alert"><b>Madeira na bancada de corte</b><span>Na foto 3, o corte é feito sobre tábua de madeira. A vigilância sanitária costuma exigir inox ou placa de polietileno branca.</span></div>
+  </div>
+</section>
+
+<!-- FOTO 1 -->
+<section class="room">
+  <div class="room-head"><span class="eyebrow">Foto 1</span><h2>Galinheiro</h2></div>
+  <div class="grid">
+    <figure><img src="fotos/1-galinheiro.jpg" alt="Galinheiro atual: frangos sobre serragem, teias de aranha no teto, ventilador sujo e caixas espalhadas"><figcaption>Como está hoje</figcaption></figure>
+    <div class="cols">
+      <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
+        <ul class="now-list">
+          <li>Muita teia de aranha no teto e no ventilador. Acumula pó e piora o ar para as aves.</li>
+          <li>Não aparece comedouro nem bebedouro: ração e água parecem ficar no chão, misturadas com a cama.</li>
+          <li>Poça d'água no corredor: o piso não tem caimento para um ralo.</li>
+          <li>Uma lâmpada só, caixas de transporte, papelão e entulho espalhados, e um pato junto dos frangos.</li>
+        </ul>
+      </div>
+      <div class="block"><h3><span class="tag do">Fazer</span>Proposta</h3>
+        <ul>
+          <li><b>Faxina pesada primeiro:</b> tirar as aves por um dia, raspar teias, lavar teto e paredes com lavadora de alta pressão e passar cal ou tinta lavável.</li>
+          <li><b>Água:</b> uma linha de bebedouros nipple (chupeta) em cada baia, ligada a uma caixa d'água de 50 a 100 L com regulador de pressão. Conta: 1 nipple para cada 10 a 12 frangos.</li>
+          <li><b>Comida:</b> comedouros tubulares pendurados com corrente, na altura do dorso da ave. Conta: 1 tubular para cada 30 a 40 frangos. O desperdício cai muito em comparação com ração no chão.</li>
+          <li><b>Piso:</b> regularizar o corredor com caimento de 1 a 2% para um ralo com grelha. Nas baias, cama de maravalha trocada a cada lote.</li>
+          <li><b>Ar e luz:</b> trocar o ventilador por um exaustor limpo e instalar 3 ou 4 lâmpadas LED tubulares, sem fio solto.</li>
+          <li><b>Separar:</b> depenadeira e escaldagem em outra sala; caixas de transporte empilhadas fora do galinheiro; pato em baia própria.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="plan">
+    <h3>Como pode ficar (vista de cima, sem escala)</h3>
+    <div class="plan-scroll">
+    <svg viewBox="0 0 520 330" role="img" aria-label="Planta do galinheiro proposto com duas baias, linhas de bebedouro nipple, comedouros tubulares, corredor com ralo e sala de abate separada">
+      <rect class="floor" x="20" y="20" width="480" height="290"/>
+      <rect class="zone" x="20" y="220" width="340" height="90"/>
+      <rect class="wall" x="20" y="20" width="480" height="290"/>
+      <!-- baias -->
+      <rect class="thin" x="30" y="30" width="155" height="180"/>
+      <rect class="thin" x="205" y="30" width="155" height="180"/>
+      <text class="sm" x="107" y="200" text-anchor="middle">Baia 1</text>
+      <text class="sm" x="282" y="200" text-anchor="middle">Baia 2</text>
+      <!-- pilar -->
+      <rect x="188" y="105" width="14" height="14" fill="var(--plan-wall)"/>
+      <text class="xs" x="195" y="132" text-anchor="middle">pilar</text>
+      <!-- caixa d'agua -->
+      <rect class="teal" x="175" y="36" width="40" height="22" rx="3"/>
+      <text class="xs" x="195" y="50" text-anchor="middle" style="fill:var(--teal)">caixa</text>
+      <!-- linhas nipple -->
+      <path class="pipe" d="M175 47 H40 V180"/>
+      <path class="pipe" d="M215 47 H350 V180"/>
+      <g fill="var(--teal)"><circle cx="40" cy="80" r="3"/><circle cx="40" cy="110" r="3"/><circle cx="40" cy="140" r="3"/><circle cx="40" cy="170" r="3"/><circle cx="350" cy="80" r="3"/><circle cx="350" cy="110" r="3"/><circle cx="350" cy="140" r="3"/><circle cx="350" cy="170" r="3"/></g>
+      <!-- comedouros -->
+      <g class="yolk"><circle cx="90" cy="95" r="11"/><circle cx="140" cy="95" r="11"/><circle cx="90" cy="150" r="11"/><circle cx="140" cy="150" r="11"/><circle cx="250" cy="95" r="11"/><circle cx="300" cy="95" r="11"/><circle cx="250" cy="150" r="11"/><circle cx="300" cy="150" r="11"/></g>
+      <!-- corredor -->
+      <text class="sm" x="190" y="250" text-anchor="middle">Corredor de serviço (piso liso, lavável)</text>
+      <circle cx="190" cy="282" r="9" fill="none" stroke="var(--plan-wall)" stroke-width="1.5"/>
+      <path d="M184 282 H196 M190 276 V288" stroke="var(--plan-wall)" stroke-width="1"/>
+      <text class="xs" x="206" y="285">ralo</text>
+      <path class="flow" d="M60 282 H170"/><path class="arrowhead" d="M172 282 l-7 -4 v8z"/>
+      <path class="flow" d="M330 282 H215"/><path class="arrowhead" d="M213 282 l7 -4 v8z"/>
+      <text class="xs" x="60" y="275">caimento 1–2%</text>
+      <!-- exaustor -->
+      <rect class="teal" x="495" y="60" width="10" height="40"/>
+      <text class="xs" x="488" y="118" text-anchor="end">exaustor</text>
+      <!-- sala abate -->
+      <line x1="370" y1="20" x2="370" y2="310" class="wall"/>
+      <rect class="red" x="380" y="130" width="110" height="170" rx="4" style="fill-opacity:.6"/>
+      <text class="sm" x="435" y="170" text-anchor="middle">Sala de abate</text>
+      <text class="xs" x="435" y="185" text-anchor="middle">depenadeira,</text>
+      <text class="xs" x="435" y="197" text-anchor="middle">escaldagem, pia</text>
+      <path d="M370 240 v40" stroke="var(--plan-floor)" stroke-width="6"/>
+      <path d="M370 240 a40 40 0 0 1 40 40" class="thin"/>
+      <text class="xs" x="380" y="40">parede ou divisória</text>
+      <text class="xs" x="380" y="52">até o teto</text>
+    </svg>
+    </div>
+    <p class="note">Tracejado azul: linha de bebedouro nipple saindo da caixa d'água. Círculos amarelos: comedouros tubulares pendurados.</p>
+  </div>
+</section>
+
+<!-- FOTO 2 -->
+<section class="room">
+  <div class="room-head"><span class="eyebrow">Foto 2</span><h2>Espaço ao lado da loja</h2></div>
+  <div class="grid">
+    <figure><img src="fotos/2-lateral.jpg" alt="Corredor lateral com caixas verdes, mesa inox coberta de papelão, botijões de gás, galões de água e engradados"><figcaption>Como está hoje</figcaption></figure>
+    <div class="cols">
+      <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
+        <ul class="now-list">
+          <li>Pé-direito de uns 4 a 5 m, com teto e paredes manchados e lâmpadas penduradas pelo fio.</li>
+          <li>Tudo no chão: botijões, galões, engradados, sacos, caixas de ovos e sucata (computador velho, placa "VittaMax", estante enferrujada).</li>
+          <li>Uma mesa de inox boa, sendo usada como apoio de papelão.</li>
+        </ul>
+      </div>
+      <div class="block"><h3><span class="tag do">Fazer</span>Proposta</h3>
+        <ul>
+          <li><b>Descarte:</b> marcar um dia com o sócio. O que não for usado em 30 dias sai. Sucata eletrônica vai para ponto de coleta.</li>
+          <li><b>Teto:</b> forro de PVC branco a uns 3 m de altura. É barato, limpa com pano úmido e esconde a laje suja. As lâmpadas viram luminárias LED presas no forro.</li>
+          <li><b>Paredes:</b> pintura acrílica lavável ou epóxi até 1,8 m. Assim um pano resolve.</li>
+          <li><b>Organização:</b> estantes de aço encostadas nas duas paredes, deixando um corredor de 1,2 m no meio. Ovos numa estante só deles, longe do sol e fora do chão.</li>
+          <li><b>Água e gás:</b> galões em estrado plástico perto da porta. Botijões numa gaiola de grade do lado de fora.</li>
+          <li><b>Fachada:</b> uma porta de enrolar ou um portão fechado na frente, para o cliente não ver o depósito.</li>
+          <li><b>Reaproveitar</b> a mesa de inox na nova sala de corte.</li>
+        </ul>
+      </div>
+      <p class="tip"><b>Vale considerar:</b> se o espaço for bom, ele pode virar estoque da loja com porta interna. Assim o reabastecimento das prateleiras não passa pela calçada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOTO 3 -->
+<section class="room">
+  <div class="room-head"><span class="eyebrow">Foto 3</span><h2>Local de corte</h2></div>
+  <div class="grid">
+    <figure><img src="fotos/3-corte.jpg" alt="Parede azulejada com aberturas; atrás, funcionária cortando frango em bancada de azulejo; na frente, mesa com toalha e mesa improvisada sobre galões"><figcaption>Como está hoje</figcaption></figure>
+    <div class="cols">
+      <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
+        <ul class="now-list">
+          <li>A parede azulejada é uma boa base: é lavável e já separa o corte do resto.</li>
+          <li>Bancada de alvenaria com tábua de madeira; frango apoiado direto no azulejo.</li>
+          <li>Na frente: mesa com toalha de pano, tábua de madeira sobre galões, papelão no chão e saco de batata.</li>
+        </ul>
+      </div>
+      <div class="block"><h3><span class="tag do">Fazer</span>Proposta</h3>
+        <ul>
+          <li><b>Manter a sala de corte fechada</b> e transformar a abertura do meio numa janela de passagem (vidro ou inox). Ela fica bem atrás do balcão de venda: corta e entrega na hora.</li>
+          <li><b>Bancada de inox</b> (a mesa da foto 2 serve) e placa de polietileno branca no lugar da madeira.</li>
+          <li><b>Pia só para lavar as mãos</b>, com sabonete e papel toalha, separada da pia de lavar utensílios.</li>
+          <li><b>Piso:</b> trocar o estrado e o papelão por tapete de borracha antiderrapante lavável e um ralo sifonado.</li>
+          <li><b>Luz:</b> luminária LED com proteção no lugar da lâmpada pendurada.</li>
+          <li>A mesa com toalha e a mesa sobre galões saem. Esse espaço vira o lado de dentro do balcão.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOTO 4 -->
+<section class="room">
+  <div class="room-head"><span class="eyebrow">Foto 4</span><h2>Loja principal</h2></div>
+  <div class="grid">
+    <figure><img src="fotos/4-loja.jpg" alt="Fachada da loja Aviário da Praça com balcões refrigerados na frente, freezer de sorvete, prateleiras e um cano escorando a viga da entrada"><figcaption>Como está hoje</figcaption></figure>
+    <div class="cols">
+      <div class="block"><h3><span class="tag now">Hoje</span>O que a foto mostra</h3>
+        <ul class="now-list">
+          <li>Os balcões refrigerados ficam logo na entrada e "fecham" a loja: o cliente compra da calçada e não entra.</li>
+          <li>Prateleiras pequenas espremidas atrás do balcão, onde o cliente não alcança.</li>
+          <li>O forro de PVC e o piso cinza estão bons e podem ficar.</li>
+          <li>O mural do galo é um ponto forte e dá identidade à loja.</li>
+        </ul>
+      </div>
+      <div class="block"><h3><span class="tag do">Fazer</span>Proposta</h3>
+        <ul>
+          <li><b>Balcão de carnes no fundo</b>, encostado na sala de corte. O cliente atravessa a loja inteira para chegar nele e passa pelas prateleiras no caminho.</li>
+          <li><b>2 gôndolas no meio, 3 corredores.</b> Gôndolas de dupla face com até 1,6 m de altura, para o caixa ver a loja toda. Corredores de 1,2 a 1,4 m.</li>
+          <li><b>Caixa na frente, à direita de quem entra.</b> Cigarros e balas atrás ou ao lado do caixa; freezer de sorvete e geladeira de bebidas perto dele (compra por impulso).</li>
+          <li><b>O que vai nas gôndolas:</b> carvão, temperos, farofa, arroz e feijão, descartáveis para churrasco, ração de pássaro e produtos de limpeza.</li>
+          <li><b>Comunicação:</b> refazer o mural com o nome da loja, e uma placa de preços impressa ou em TV no lugar do quadro de giz.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="plan">
+    <h3>Planta proposta (vista de cima, ~6 × 12 m)</h3>
+    <div class="plan-scroll">
+    <svg viewBox="0 0 470 690" role="img" aria-label="Planta da loja proposta: estoque e sala de corte no fundo, balcão de carnes, duas gôndolas com três corredores e caixa na frente">
+      <rect class="floor" x="60" y="20" width="300" height="600"/>
+      <!-- estoque -->
+      <rect class="zone" x="60" y="20" width="300" height="70"/>
+      <text class="sm" x="210" y="58" text-anchor="middle">Estoque / câmara fria</text>
+      <line x1="60" y1="90" x2="360" y2="90" class="thin"/>
+      <!-- sala de corte -->
+      <rect class="teal" x="62" y="92" width="296" height="106" style="fill-opacity:.7;stroke:none"/>
+      <text class="sm" x="210" y="130" text-anchor="middle" style="font-weight:700">Sala de corte (azulejada)</text>
+      <rect class="thin" x="75" y="100" width="150" height="18"/><text class="xs" x="150" y="112" text-anchor="middle">bancada inox</text>
+      <rect class="thin" x="300" y="100" width="45" height="22"/><text class="xs" x="322" y="114" text-anchor="middle">pia</text>
+      <!-- parede corte com janela -->
+      <line x1="60" y1="200" x2="170" y2="200" class="wall"/>
+      <line x1="250" y1="200" x2="315" y2="200" class="wall"/>
+      <line x1="170" y1="200" x2="250" y2="200" class="glass"/>
+      <text class="xs" x="210" y="192" text-anchor="middle" style="fill:var(--teal)">janela de passagem</text>
+      <path d="M315 200 a30 30 0 0 0 30 -30" class="thin"/><line x1="345" y1="200" x2="345" y2="170" class="thin"/>
+      <text class="xs" x="330" y="160" text-anchor="middle">porta</text>
+      <!-- balcao -->
+      <rect class="zone" x="62" y="202" width="296" height="22" style="opacity:.6"/>
+      <text class="xs" x="72" y="217">atendente</text>
+      <rect class="yolk" x="90" y="226" width="240" height="34" rx="3"/>
+      <text class="sm" x="210" y="247" text-anchor="middle" style="font-weight:700">Balcão refrigerado de carnes</text>
+      <text class="xs" x="210" y="282" text-anchor="middle">área de espera dos clientes</text>
+      <!-- gondolas -->
+      <rect class="teal" x="130" y="305" width="45" height="200" rx="3"/>
+      <rect class="teal" x="245" y="305" width="45" height="200" rx="3"/>
+      <text class="sm" transform="translate(157 405) rotate(-90)" text-anchor="middle">Gôndola 1 · dupla face</text>
+      <text class="sm" transform="translate(272 405) rotate(-90)" text-anchor="middle">Gôndola 2 · dupla face</text>
+      <text class="mono" x="95" y="405" text-anchor="middle">C1</text>
+      <text class="mono" x="210" y="405" text-anchor="middle">C2</text>
+      <text class="mono" x="325" y="405" text-anchor="middle">C3</text>
+      <!-- cotas corredores -->
+      <g class="mono"><text x="95" y="420" text-anchor="middle">1,4 m</text><text x="210" y="420" text-anchor="middle">1,4 m</text><text x="325" y="420" text-anchor="middle">1,4 m</text></g>
+      <!-- frente -->
+      <rect class="teal" x="63" y="520" width="34" height="60" rx="2"/>
+      <text class="xs" transform="translate(84 550) rotate(-90)" text-anchor="middle" style="fill:var(--ink)">bebidas</text>
+      <rect class="yolk" x="105" y="575" width="62" height="34" rx="3"/>
+      <text class="xs" x="136" y="596" text-anchor="middle" style="fill:var(--ink)">sorvete</text>
+      <rect class="red" x="275" y="535" width="80" height="44" rx="3"/>
+      <text class="sm" x="315" y="561" text-anchor="middle" style="font-weight:700">Caixa</text>
+      <text class="xs" x="315" y="596" text-anchor="middle">cigarro, balas</text>
+      <!-- parede -->
+      <path class="wall" d="M60 620 V20 H360 V620"/>
+      <line x1="60" y1="620" x2="110" y2="620" class="wall"/>
+      <line x1="320" y1="620" x2="360" y2="620" class="wall"/>
+      <!-- pilar alert -->
+      <circle cx="210" cy="620" r="7" fill="var(--alert)"/>
+      <text class="xs" x="222" y="640" style="fill:var(--alert)">escora atual: ver engenheiro</text>
+      <!-- fluxo cliente -->
+      <path class="flow" d="M180 660 V630 M150 615 C150 560 95 540 95 470 V300 C95 280 130 275 150 275"/>
+      <path class="arrowhead" d="M156 275 l-8 -4 v8z"/>
+      <path class="flow" d="M270 275 C300 275 325 285 325 310 V500 C325 520 310 528 300 530"/>
+      <path class="arrowhead" d="M296 532 l3 -9 l6 6z"/>
+      <text class="sm" x="210" y="672" text-anchor="middle" style="font-weight:700">ENTRADA · calçada</text>
+      <!-- legenda lateral -->
+      <g class="xs"><text x="372" y="60">fundo</text><text x="372" y="150">corte</text><text x="372" y="245">venda</text><text x="372" y="410">salão</text><text x="372" y="565">frente</text></g>
+      <text class="xs" x="20" y="410" transform="rotate(-90 20 410)" text-anchor="middle">~12 m (estimado)</text>
+      <text class="xs" x="210" y="14" text-anchor="middle">~6 m (estimado)</text>
+    </svg>
+    </div>
+    <p class="note">Linha tracejada amarela: o caminho do cliente. Ele entra, passa pelo corredor 1, compra no balcão do fundo, volta pelo corredor 3 e paga no caixa.</p>
+  </div>
+  <p class="tip"><b>Sobre "tirar a parede do meio":</b> no desenho mantive a parede azulejada da sala de corte, porque ela é a barreira sanitária que a vigilância exige. O que sai são os balcões da frente e as prateleiras de trás. Se a parede que você quer tirar é outra, me diga qual que eu ajusto a planta.</p>
+</section>
+
+<section style="display:flex;flex-direction:column;gap:16px">
+  <h2>Ordem sugerida da obra</h2>
+  <ol class="steps">
+    <li><b>Engenheiro na fachada e nas paredes.</b> Avaliar a viga escorada e dizer quais paredes podem sair. Sem isso, nada de demolição.</li>
+    <li><b>Descarte e limpeza.</b> Esvaziar o espaço lateral e fazer a faxina pesada do galinheiro. É barato e a mudança já aparece.</li>
+    <li><b>Galinheiro.</b> Bebedouros nipple, comedouros tubulares, piso com ralo e sala de abate separada.</li>
+    <li><b>Sala de corte.</b> Bancada inox, pia de mãos e janela de passagem.</li>
+    <li><b>Loja.</b> Levar o balcão para o fundo, montar as gôndolas e o caixa. Dá para fazer num fim de semana, sem fechar a loja.</li>
+    <li><b>Espaço lateral.</b> Forro, pintura, estantes e gaiola de gás.</li>
+    <li><b>Visual.</b> Mural novo, fachada e placa de preços.</li>
+  </ol>
+</section>
+
+<section class="ask">
+  <h3>Para afinar o projeto, preciso de:</h3>
+  <ul>
+    <li>Largura e profundidade da loja, do espaço lateral e do galinheiro (pode ser em passos, se não tiver trena).</li>
+    <li>Quantos frangos ficam no galinheiro em média.</li>
+    <li>Qual é exatamente a parede que você quer tirar (uma foto dela de frente ajuda).</li>
+  </ul>
+</section>
+
+</div>
